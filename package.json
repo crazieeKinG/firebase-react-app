@@ -10,6 +10,7 @@
     "@types/node": "^16.11.56",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
+    "bootstrap": "^5.2.0",
     "firebase": "9.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-deploy": "yarn build && firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": [
