@@ -10,6 +10,7 @@ interface Props {
 
 const BlogCard = ({ blog, handleEditBlog }: Props) => {
     const { user } = useContext(AuthContext) as AuthUser;
+
     return (
         <div className="card col-12">
             <div className="card-body">
@@ -24,7 +25,14 @@ const BlogCard = ({ blog, handleEditBlog }: Props) => {
                 </h6>
                 <hr />
                 <p className="card-text">{blog.content}</p>
-                <h6 className="card-subtitle mb-2 text-muted">
+                {blog.imageUrl && (
+                    <img
+                        className="img-fluid rounded"
+                        src={blog.imageUrl}
+                        alt={blog.title}
+                    />
+                )}
+                <h6 className="card-subtitle my-2 text-muted">
                     - {blog.author}
                 </h6>
             </div>

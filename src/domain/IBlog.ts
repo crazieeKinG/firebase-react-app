@@ -5,6 +5,7 @@ interface IBlog {
     publishedDate: Date;
     isPublished: boolean;
     author: string;
+    imageUrl: string;
 }
 
 export default IBlog;

@@ -123,14 +123,26 @@ function Home() {
                     </div>
                 </div>
             )}
-            <div>
-                <h3>Blogs</h3>
-                <button onClick={handeFetchBlogs}>Refresh</button>
+            <div className="mt-3">
+                <div className="row">
+                    <h3 className="col-8">Blogs</h3>
+                    <div className="col-4 d-flex justify-content-end">
+                        <button
+                            className="btn btn-info text-light"
+                            onClick={handeFetchBlogs}
+                        >
+                            Refresh
+                        </button>
+                    </div>
+                </div>
                 <hr />
                 <div className="row">
                     <div className="row col-8">
                         {blogs.map((blog) => (
-                            <div className="col-4 my-2 px-2" key={blog.id}>
+                            <div
+                                className="col-sm-12 col-md-6 col-lg-6 my-2 px-2"
+                                key={blog.id}
+                            >
                                 <BlogCard
                                     blog={blog}
                                     handleEditBlog={handleEditBlog}
@@ -138,15 +150,17 @@ function Home() {
                             </div>
                         ))}
                     </div>
-                    <div className="col-4">
-                        <h2>Edit blog</h2>
-                        <hr />
-                        <AddEditBlogForm
-                            initialData={currentBlog as IBlog}
-                            handleForm={handleUpdateBlog}
-                            handleDeleteBlog={handleDeleteBlog}
-                        />
-                    </div>
+                    {user && (
+                        <div className="col-4">
+                            <h2>Edit blog</h2>
+                            <hr />
+                            <AddEditBlogForm
+                                initialData={currentBlog as IBlog}
+                                handleForm={handleUpdateBlog}
+                                handleDeleteBlog={handleDeleteBlog}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

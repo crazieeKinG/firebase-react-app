@@ -6,6 +6,7 @@ import {
     doc,
     getDocs,
     getFirestore,
+    orderBy,
     query,
     QueryConstraint,
     updateDoc,
@@ -26,8 +27,8 @@ const readDocuments = (queries: any[]) => {
     queries.forEach((query) => {
         allQueries.push(where(query.field, query.condition, query.value));
     });
-
-    return getDocs(query(selectedCollection, ...allQueries));
+    const latestBlogOrder = orderBy("publishedDate", "desc");
+    return getDocs(query(selectedCollection, ...allQueries, latestBlogOrder));
 };
 
 const updateDocument = (id: string, document: any) => {

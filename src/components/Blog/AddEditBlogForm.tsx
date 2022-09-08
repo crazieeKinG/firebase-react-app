@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contextApi/AuthProvider";
 import { AuthUser } from "../../domain/AuthContext";
 import IBlog from "../../domain/IBlog";
+import FirebaseStorageService from "../../firebase/FirebaseStorageService";
 
 interface Props {
     initialData?: IBlog;
@@ -20,6 +21,9 @@ const AddEditBlogForm = ({
     const [publishedDate, setPublishedDate] = useState<string>(
         new Date().toISOString().split("T")[0]
     );
+    const [uploadImage, setUploadImage] = useState<File>();
+    const [imageUrl, setImageUrl] = useState<string>("");
+    const [uploadProgress, setUploadProgress] = useState<number>(-1);
 
     useEffect(() => {
         if (initialData) {
@@ -28,10 +32,11 @@ const AddEditBlogForm = ({
             setPublishedDate(
                 (initialData?.publishedDate as Date).toISOString().split("T")[0]
             );
+            setImageUrl(initialData?.imageUrl as string);
         } else resetForm();
     }, [initialData]);
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
 
         const author = user?.email;
@@ -45,6 +50,36 @@ const AddEditBlogForm = ({
             alert("Missing content");
             return;
         }
+
+        let uploadedUrl: string = "";
+
+        if (imageUrl && uploadImage) {
+            try {
+                await FirebaseStorageService.deleteFile(imageUrl);
+            } catch (error: any) {
+                alert(error.message);
+                return;
+            }
+        }
+
+        if (uploadImage) {
+            try {
+                const imagePath = `images/${Date.now()}`;
+                const downloadUrl = await FirebaseStorageService.uploadFile(
+                    uploadImage,
+                    imagePath,
+                    setUploadProgress
+                );
+
+                uploadedUrl = downloadUrl as string;
+                setImageUrl(uploadedUrl);
+            } catch (error: any) {
+                setUploadProgress(-1);
+                alert(error.message);
+                return;
+            }
+        }
+
         const isPublished =
             new Date(publishedDate) <= new Date() ? true : false;
 
@@ -54,6 +89,7 @@ const AddEditBlogForm = ({
             publishedDate: new Date(publishedDate),
             isPublished: isPublished,
             author: author,
+            imageUrl: uploadedUrl,
         };
 
         initialData
@@ -61,7 +97,16 @@ const AddEditBlogForm = ({
             : handleForm(blog).then(() => resetForm());
     };
 
-    const handleDelete = (id: string) => {
+    const handleDelete = async (id: string) => {
+        if (imageUrl) {
+            try {
+                await FirebaseStorageService.deleteFile(imageUrl);
+            } catch (error: any) {
+                alert(error.message);
+                return;
+            }
+        }
+
         (handleDeleteBlog as (id: string) => Promise<void>)(id).then(() =>
             resetForm()
         );
@@ -71,6 +116,21 @@ const AddEditBlogForm = ({
         setTitle("");
         setContent("");
         setPublishedDate(new Date().toISOString().split("T")[0]);
+        setUploadImage(undefined);
+        setImageUrl("");
+        setUploadProgress(-1);
+    };
+
+    const handleFileChange = (event: any) => {
+        const files = event.target.files;
+        const file = files[0];
+
+        if (!file) {
+            alert("File not found");
+            return;
+        }
+
+        setUploadImage(file);
     };
 
     return (
@@ -121,6 +181,29 @@ const AddEditBlogForm = ({
                         onChange={(event) =>
                             setPublishedDate(event.target.value)
                         }
+                    />
+                </div>
+            </div>
+            <div className="form-group row my-2">
+                <label htmlFor="image" className="col-4 col-form-label">
+                    Upload Image
+                </label>
+                <div className="col-8">
+                    {imageUrl && (
+                        <img
+                            className="img-thumbnail"
+                            src={imageUrl}
+                            alt={title}
+                        />
+                    )}
+                    {uploadProgress > -1 && (
+                        <small>Uploading...{uploadProgress}%</small>
+                    )}
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="image"
+                        onChange={handleFileChange}
                     />
                 </div>
             </div>
