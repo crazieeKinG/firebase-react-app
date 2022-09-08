@@ -9,6 +9,17 @@ const LoginForm = () => {
         event.preventDefault();
 
         try {
+            await FirebaseAuthService.loginUser(email, password);
+            setEmail("");
+            setPassword("");
+        } catch (error: any) {
+            alert(error.message);
+        }
+    };
+
+    const handleRegister = async () => {
+        if (!email || !password) return;
+        try {
             await FirebaseAuthService.registerUser(email, password);
             setEmail("");
             setPassword("");
@@ -36,6 +47,7 @@ const LoginForm = () => {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="Enter email"
+                    required
                 />
             </div>
             <div className="form-group my-2">
@@ -47,10 +59,18 @@ const LoginForm = () => {
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder="Password"
+                    required
                 />
             </div>
             <button type="submit" className="btn btn-primary my-2">
                 Login
+            </button>
+            <button
+                type="button"
+                className="btn btn-primary my-2 mx-1"
+                onClick={handleRegister}
+            >
+                Register
             </button>
             <button
                 type="button"

@@ -21,11 +21,11 @@ const ResetPassword = () => {
     return (
         <div>
             <div className="my-2">
-                <label htmlFor="email">Email address</label>
+                <label htmlFor="resetEmail">Email address</label>
                 <input
                     type="email"
                     className="form-control"
-                    id="email"
+                    id="resetEmail"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="Enter email"
