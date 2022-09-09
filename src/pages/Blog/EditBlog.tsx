@@ -37,6 +37,7 @@ const EditBlog = () => {
     useEffect(() => {
         const blog = blogs?.find((blog) => blog.id === id);
         setSelectedBlog(blog as IBlog);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

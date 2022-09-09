@@ -98,6 +98,7 @@ const LoginForm = ({ formType }: Props) => {
                 >
                     <img
                         src="https://img.icons8.com/color/16/000000/google-logo.png"
+                        alt="Google"
                         className="img-fluid"
                     />
                     <span className="px-2">Continue with Google</span>

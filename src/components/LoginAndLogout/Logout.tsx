@@ -17,6 +17,7 @@ const Logout = ({ existingUser }: Props) => {
 
     useEffect(() => {
         handleLogout();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

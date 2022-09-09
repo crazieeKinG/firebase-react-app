@@ -40,6 +40,7 @@ function Home() {
 
     useEffect(() => {
         handleFetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     return (
