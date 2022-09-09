@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import { LOGIN } from "../constants/routeConstants";
 import { AppContext } from "../contextApi/AuthProvider";

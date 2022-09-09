@@ -2,12 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContext } from "../../contextApi/AuthProvider";
 import { IContext } from "../../domain/IContext";
-import FirebaseFirestoreService from "../../firebase/FirebaseFirestoreService";
-import ResetPassword from "../../components/LoginAndLogout/ResetPassword";
-import LoginForm from "../../components/LoginAndLogout/LoginForm";
-import Logout from "../../components/LoginAndLogout/Logout";
-import AddEditBlogForm from "../../components/Blog/AddEditBlogForm";
-import IBlog from "../../domain/IBlog";
 import BlogCard from "../../components/Blog/BlogCard";
 import { fetchAllBlogs } from "../../utils/fetchBlogs";
 import {
@@ -34,7 +28,7 @@ function Home() {
             lastBlogId = blogs[lastBlogIndex].id as string;
             console.log(lastBlogId, lastBlogIndex, blogs[lastBlogIndex]);
         }
-        
+
         const newBlogs = await fetchAllBlogs(lastBlogId);
         if (newBlogs.length < DEFAULT_BLOG_PER_PAGE) {
             setloadMoreBlog(All_BLOGS);
