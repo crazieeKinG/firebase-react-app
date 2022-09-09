@@ -1,19 +1,21 @@
 import { useContext } from "react";
-import { AuthContext } from "../../contextApi/AuthProvider";
-import { AuthUser } from "../../domain/AuthContext";
+import { AppContext } from "../../contextApi/AuthProvider";
+import { IContext } from "../../domain/IContext";
 import IBlog from "../../domain/IBlog";
+import { Link } from "react-router-dom";
+import { EDIT_BLOG } from "../../constants/routeConstants";
+import { editRoute } from "../../utils/editRoute";
 
 interface Props {
     blog: IBlog;
-    handleEditBlog: (blogId: string) => void;
 }
 
-const BlogCard = ({ blog, handleEditBlog }: Props) => {
-    const { user } = useContext(AuthContext) as AuthUser;
+const BlogCard = ({ blog }: Props) => {
+    const { user } = useContext(AppContext) as IContext;
 
     return (
-        <div className="card col-12">
-            <div className="card-body">
+        <div className="card">
+            <div className="card-header">
                 <h5 className="card-title">
                     {blog.title}{" "}
                     {!blog.isPublished && (
@@ -23,29 +25,35 @@ const BlogCard = ({ blog, handleEditBlog }: Props) => {
                 <h6 className="card-subtitle mb-2 text-muted">
                     {blog.publishedDate.toDateString()}
                 </h6>
-                <hr />
+            </div>
+            <div className="card-body">
                 <p className="card-text">{blog.content}</p>
                 {blog.imageUrl && (
-                    <img
-                        className="img-fluid rounded"
-                        src={blog.imageUrl}
-                        alt={blog.title}
-                    />
+                    <>
+                        <hr />
+                        <img
+                            className="img-fluid rounded"
+                            src={blog.imageUrl}
+                            alt={blog.title}
+                        />
+                    </>
                 )}
-                <h6 className="card-subtitle my-2 text-muted">
-                    - {blog.author}
-                </h6>
             </div>
-            {user && user.email === blog.author && (
-                <div className="card-footer">
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => handleEditBlog(blog.id as string)}
-                    >
-                        Edit
-                    </button>
+            <div className="card-footer">
+                <div className="row justify-content-between">
+                    <h6 className="card-subtitle my-2 text-muted col-10">
+                        - {blog.author}
+                    </h6>
+                    {user && user.email === blog.author && (
+                        <Link
+                            to={editRoute(EDIT_BLOG, blog.id as string)}
+                            className="btn btn-primary col-2"
+                        >
+                            Edit
+                        </Link>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };

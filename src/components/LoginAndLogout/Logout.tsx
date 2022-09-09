@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "../../constants/routeConstants";
 import FirebaseAuthService from "../../firebase/FirebaseAuthService";
 
 interface Props {
@@ -5,16 +8,20 @@ interface Props {
 }
 
 const Logout = ({ existingUser }: Props) => {
+    const navigate = useNavigate();
     const handleLogout = () => {
-        FirebaseAuthService.logoutUser();
+        FirebaseAuthService.logoutUser().then(() => {
+            navigate(HOME);
+        });
     };
+
+    useEffect(() => {
+        handleLogout();
+    }, []);
 
     return (
         <div>
-            <h5>Welcome, {existingUser}</h5>
-            <button className="btn btn-primary" onClick={handleLogout}>
-                Logout
-            </button>
+            <h5>Logging out, {existingUser}</h5>
         </div>
     );
 };

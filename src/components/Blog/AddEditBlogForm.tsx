@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contextApi/AuthProvider";
-import { AuthUser } from "../../domain/AuthContext";
+import { AppContext } from "../../contextApi/AuthProvider";
+import { IContext } from "../../domain/IContext";
 import IBlog from "../../domain/IBlog";
 import FirebaseStorageService from "../../firebase/FirebaseStorageService";
+import DeleteConfirm from "../Modal/DeleteConfirm";
 
 interface Props {
     initialData?: IBlog;
@@ -15,7 +16,7 @@ const AddEditBlogForm = ({
     handleForm,
     handleDeleteBlog,
 }: Props) => {
-    const { user } = useContext(AuthContext) as AuthUser;
+    const { user } = useContext(AppContext) as IContext;
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const [publishedDate, setPublishedDate] = useState<string>(
@@ -196,15 +197,15 @@ const AddEditBlogForm = ({
                             alt={title}
                         />
                     )}
-                    {uploadProgress > -1 && (
-                        <small>Uploading...{uploadProgress}%</small>
-                    )}
                     <input
                         type="file"
                         className="form-control"
                         id="image"
                         onChange={handleFileChange}
                     />
+                    {uploadProgress > -1 && (
+                        <small>Uploading...{uploadProgress}%</small>
+                    )}
                 </div>
             </div>
 
@@ -212,13 +213,7 @@ const AddEditBlogForm = ({
                 Submit
             </button>
             {initialData && (
-                <button
-                    type="button"
-                    className="btn btn-danger my-2 mx-2"
-                    onClick={() => handleDelete(initialData?.id as string)}
-                >
-                    Delete
-                </button>
+                <DeleteConfirm blog={initialData} handleDelete={handleDelete} />
             )}
         </form>
     );

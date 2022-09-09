@@ -1,23 +1,33 @@
 import React, { createContext, useState } from "react";
-import { AuthUser } from "../domain/AuthContext";
+import { IContext } from "../domain/IContext";
+import IBlog from "../domain/IBlog";
 import FirebaseAuthService from "../firebase/FirebaseAuthService";
 
-export const AuthContext = createContext<AuthUser | undefined>(undefined);
+export const AppContext = createContext<IContext | undefined>(undefined);
 
 interface Props {
     children?: React.ReactNode;
 }
 
-const AuthProvider = ({ children }: Props) => {
+const AppProvider = ({ children }: Props) => {
     const [user, setUser] = useState<any>(null);
+    const [blogs, setBlogs] = useState<IBlog[]>([]);
+
+    const contextValue = {
+        user: user,
+        blog: {
+            blogs: blogs,
+            setBlogs: setBlogs,
+        },
+    };
 
     FirebaseAuthService.subscribeToAuthChanges(setUser);
 
     return (
-        <AuthContext.Provider value={{ user: user }}>
+        <AppContext.Provider value={contextValue}>
             {children}
-        </AuthContext.Provider>
+        </AppContext.Provider>
     );
 };
 
-export default AuthProvider;
+export default AppProvider;

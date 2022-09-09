@@ -1,12 +1,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import AuthProvider from "./contextApi/AuthProvider";
-import Home from "./pages/Home/Home";
+import "bootstrap/dist/js/bootstrap.bundle";
+import AppProvider from "./contextApi/AuthProvider";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
     return (
-        <AuthProvider>
-            <Home />
-        </AuthProvider>
+        <div className="container">
+            <AppProvider>
+                <AppRoutes />
+            </AppProvider>
+        </div>
     );
 }
 
