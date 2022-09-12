@@ -41,7 +41,7 @@ function Home() {
 
     useEffect(() => {
         setPageTitle("Simple Blog | Firebase-react-app");
-        // handleFetchBlogs();
+        handleFetchBlogs();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 

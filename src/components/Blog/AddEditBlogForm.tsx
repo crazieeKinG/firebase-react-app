@@ -52,7 +52,7 @@ const AddEditBlogForm = ({
             return;
         }
 
-        let uploadedUrl: string = "";
+        let uploadedUrl: string = imageUrl ? imageUrl : "";
 
         if (imageUrl && uploadImage) {
             try {
