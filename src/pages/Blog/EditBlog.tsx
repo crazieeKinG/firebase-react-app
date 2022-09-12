@@ -6,28 +6,29 @@ import { AppContext } from "../../contextApi/AuthProvider";
 import IBlog from "../../domain/IBlog";
 import { IContext } from "../../domain/IContext";
 import FirebaseFirestoreService from "../../firebase/FirebaseFirestoreService";
+import { setPageTitle } from "../../utils/setPageTitle";
 
 const EditBlog = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { blogs } = (useContext(AppContext) as IContext).blog;
     const [selectedBlog, setSelectedBlog] = useState<IBlog | null>(null);
-    const handleUpdateBlog = async (id: string, updatedBlog: IBlog) => {
+    const handleUpdateBlog = async (blogId: string, updatedBlog: IBlog) => {
         try {
-            await FirebaseFirestoreService.updateDocument(id, updatedBlog);
+            await FirebaseFirestoreService.updateDocument(blogId, updatedBlog);
 
-            alert(`Succefully updated ${id}`);
+            alert(`Succefully updated ${blogId}`);
             navigate(HOME);
         } catch (error: any) {
             alert(error.message);
         }
     };
 
-    const handleDeleteBlog = async (id: string) => {
+    const handleDeleteBlog = async (blogId: string) => {
         try {
-            await FirebaseFirestoreService.deleteDocument(id);
+            await FirebaseFirestoreService.deleteDocument(blogId);
 
-            alert(`Deleted document ${id}`);
+            alert(`Deleted document ${blogId}`);
             navigate(HOME);
         } catch (error: any) {
             alert(error.message);
@@ -35,9 +36,10 @@ const EditBlog = () => {
     };
 
     useEffect(() => {
-        const blog = blogs?.find((blog) => blog.id === id);
+        setPageTitle("Simple Blog | Edit blog");
+        const blog = blogs?.find((eachBlog) => eachBlog.id === id);
         setSelectedBlog(blog as IBlog);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

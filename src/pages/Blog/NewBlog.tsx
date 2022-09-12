@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddEditBlogForm from "../../components/Blog/AddEditBlogForm";
 import { HOME } from "../../constants/routeConstants";
 import IBlog from "../../domain/IBlog";
 import FirebaseFirestoreService from "../../firebase/FirebaseFirestoreService";
+import { setPageTitle } from "../../utils/setPageTitle";
 
 const NewBlog = () => {
     const navigate = useNavigate();
@@ -19,8 +21,14 @@ const NewBlog = () => {
         }
     };
 
+    useEffect(() => {
+        setPageTitle("Simple Blog | Add new blog");
+    }, []);
+
     return (
-        <div>
+        <div className="mt-3">
+            <h1>New Blog</h1>
+            <hr />
             <AddEditBlogForm handleForm={handleAddNewBlog} />
         </div>
     );

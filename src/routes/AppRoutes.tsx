@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Logout from "../components/LoginAndLogout/Logout";
+import ResetPassword from "../components/LoginAndLogout/ResetPassword";
 import Navbar from "../components/Navbar/Navbar";
 import {
     ADD_BLOG,
@@ -10,6 +11,7 @@ import {
     LOGOUT,
     NOT_FOUND,
     REGISTER,
+    RESET_PASSWORD,
 } from "../constants/routeConstants";
 import { AppContext } from "../contextApi/AuthProvider";
 import { IContext } from "../domain/IContext";
@@ -18,6 +20,7 @@ import NewBlog from "../pages/Blog/NewBlog";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Login/Register";
+import NotFound from "../pages/Not-found/NotFound";
 import AuthenticatedRoutes from "./AuthenticatedRoutes";
 
 const AppRoutes = () => {
@@ -37,12 +40,10 @@ const AppRoutes = () => {
                 <Route path={HOME} element={<Navbar />}>
                     <Route index element={<Home />} />
                     <Route path={LOGIN} element={<Login />} />
+                    <Route path={RESET_PASSWORD} element={<ResetPassword />} />
                     <Route path={REGISTER} element={<Register />} />
                 </Route>
-                <Route
-                    path={NOT_FOUND}
-                    element={<h2 className="container">Page not found</h2>}
-                />
+                <Route path={NOT_FOUND} element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     );

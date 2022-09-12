@@ -9,6 +9,7 @@ import {
     DEFAULT_BLOG_PER_PAGE,
     LOAD_MORE_BLOGS,
 } from "../../constants/constants";
+import { setPageTitle } from "../../utils/setPageTitle";
 
 function Home() {
     const contextApi = useContext(AppContext) as IContext;
@@ -39,8 +40,9 @@ function Home() {
     };
 
     useEffect(() => {
-        handleFetchBlogs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        setPageTitle("Simple Blog | Firebase-react-app");
+        // handleFetchBlogs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     return (

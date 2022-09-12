@@ -1,0 +1,6 @@
+projectKey=Simple-blog-firebase-react-app
+serverUrl=http://localhost:9000
+serverVersion=9.5.0.56709
+dashboardUrl=http://localhost:9000/dashboard?id=Simple-blog-firebase-react-app
+ceTaskId=AYMwCJVtqfNKWQzecaRv
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYMwCJVtqfNKWQzecaRv

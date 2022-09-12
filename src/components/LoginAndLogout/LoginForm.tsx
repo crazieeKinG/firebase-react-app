@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { REGISTER_FORM } from "../../constants/constants";
-import { HOME, LOGIN, REGISTER } from "../../constants/routeConstants";
+import { Link, useNavigate } from "react-router-dom";
+import { LOGIN_FORM, REGISTER_FORM } from "../../constants/constants";
+import {
+    HOME,
+    LOGIN,
+    REGISTER,
+    RESET_PASSWORD,
+} from "../../constants/routeConstants";
 import FirebaseAuthService from "../../firebase/FirebaseAuthService";
 
 interface Props {
@@ -55,8 +59,8 @@ const LoginForm = ({ formType }: Props) => {
         formType === REGISTER_FORM ? handleRegister : handleSubmit;
 
     return (
-        <div className="text-center">
-            <h1>{formType} to continue</h1>
+        <div>
+            <h1 className="text-center mt-4">{formType} to continue</h1>
             <hr />
             <div className="col-6 mx-auto mt-4">
                 <form onSubmit={handleForm}>
@@ -86,32 +90,42 @@ const LoginForm = ({ formType }: Props) => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary my-2">
-                        {formType}
-                    </button>
+                    {formType === LOGIN_FORM && (
+                        <div className="form-group my-2 d-flex justify-content-end">
+                            <Link to={RESET_PASSWORD}>Forget Password?</Link>
+                        </div>
+                    )}
+                    <div className="form-group my-4 d-flex justify-content-center">
+                        <button type="submit" className="btn btn-primary col-6">
+                            {formType}
+                        </button>
+                    </div>
                 </form>
                 <hr />
-                <button
-                    type="button"
-                    className="btn btn-outline-light text-dark my-2 mx-1"
-                    onClick={handleLoginWithGoogle}
-                >
-                    <img
-                        src="https://img.icons8.com/color/16/000000/google-logo.png"
-                        alt="Google"
-                        className="img-fluid"
-                    />
-                    <span className="px-2">Continue with Google</span>
-                </button>
-                {formType === REGISTER_FORM ? (
-                    <p>
-                        Already have an account? <Link to={LOGIN}>Login</Link>
-                    </p>
-                ) : (
-                    <p>
-                        New User? <Link to={REGISTER}>Register</Link>
-                    </p>
-                )}
+                <div className="text-center">
+                    <button
+                        type="button"
+                        className="btn btn-outline-light text-dark my-2 mx-1"
+                        onClick={handleLoginWithGoogle}
+                    >
+                        <img
+                            src="https://img.icons8.com/color/16/000000/google-logo.png"
+                            alt="Google"
+                            className="img-fluid"
+                        />
+                        <span className="px-2">Continue with Google</span>
+                    </button>
+                    {formType === REGISTER_FORM ? (
+                        <p>
+                            Already have an account?{" "}
+                            <Link to={LOGIN}>Login</Link>
+                        </p>
+                    ) : (
+                        <p>
+                            New User? <Link to={REGISTER}>Register</Link>
+                        </p>
+                    )}
+                </div>
             </div>
         </div>
     );

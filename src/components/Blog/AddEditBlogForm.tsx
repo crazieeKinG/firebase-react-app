@@ -28,12 +28,12 @@ const AddEditBlogForm = ({
 
     useEffect(() => {
         if (initialData) {
-            setTitle(initialData?.title as string);
-            setContent(initialData?.content as string);
+            setTitle(initialData?.title);
+            setContent(initialData?.content);
             setPublishedDate(
-                (initialData?.publishedDate as Date).toISOString().split("T")[0]
+                (initialData?.publishedDate).toISOString().split("T")[0]
             );
-            setImageUrl(initialData?.imageUrl as string);
+            setImageUrl(initialData?.imageUrl);
         } else resetForm();
     }, [initialData]);
 
@@ -189,32 +189,39 @@ const AddEditBlogForm = ({
                 <label htmlFor="image" className="col-4 col-form-label">
                     Upload Image
                 </label>
-                <div className="col-8">
-                    {imageUrl && (
-                        <img
-                            className="img-thumbnail"
-                            src={imageUrl}
-                            alt={title}
-                        />
-                    )}
+                <div className="col-8 ">
                     <input
                         type="file"
-                        className="form-control"
+                        className="form-control my-1"
                         id="image"
                         onChange={handleFileChange}
                     />
                     {uploadProgress > -1 && (
-                        <small>Uploading...{uploadProgress}%</small>
+                        <small className="text-success my-2">
+                            Uploading...{uploadProgress}%
+                        </small>
+                    )}
+                    {imageUrl && (
+                        <img
+                            className="img-thumbnail col-3"
+                            src={imageUrl}
+                            alt={title}
+                        />
                     )}
                 </div>
             </div>
 
-            <button type="submit" className="btn btn-primary my-2">
-                Submit
-            </button>
-            {initialData && (
-                <DeleteConfirm blog={initialData} handleDelete={handleDelete} />
-            )}
+            <div className="mt-3 offset-4 px-2">
+                <button type="submit" className="btn btn-primary my-2">
+                    Submit
+                </button>
+                {initialData && (
+                    <DeleteConfirm
+                        blog={initialData}
+                        handleDelete={handleDelete}
+                    />
+                )}
+            </div>
         </form>
     );
 };

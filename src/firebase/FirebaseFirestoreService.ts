@@ -1,4 +1,4 @@
-import firebase from "./FirebaseConfig";
+import firebase from "./Firebase";
 import {
     addDoc,
     collection,
@@ -34,8 +34,8 @@ const readDocument = (documentId: string) => {
 
 const readDocuments = async (queries: any[], lastDocumnetId: string = "") => {
     const allQueries: QueryConstraint[] = [];
-    queries.forEach((query) => {
-        allQueries.push(where(query.field, query.condition, query.value));
+    queries.forEach((eachQuery) => {
+        allQueries.push(where(eachQuery.field, eachQuery.condition, eachQuery.value));
     });
     const latestBlogOrder = orderBy("publishedDate", "desc");
 

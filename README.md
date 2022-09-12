@@ -1,6 +1,7 @@
 # Getting Started with Firebase-react-app
 
 A simple blog web based application using Firebase, ReactJS, and Typescript.
+Deployed using firebase at [Demo](simpleblog-874d6.web.app/)
 
 ## Available Scripts
 

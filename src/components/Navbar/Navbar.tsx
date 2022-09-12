@@ -18,7 +18,7 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg bg-light">
                 <div className="container-fluid justify-content-between">
                     <Link to={HOME} className="navbar-brand">
-                        Firebase-React-App
+                        Simple Blog | Firebase-React-App
                     </Link>
 
                     <div className="col-8 navbar-nav justify-content-end">

@@ -5,7 +5,7 @@ import {
     ref,
     uploadBytesResumable,
 } from "firebase/storage";
-import firebase from "./FirebaseConfig";
+import firebase from "./Firebase";
 
 const storage = getStorage(firebase);
 
@@ -32,10 +32,8 @@ const uploadFile = (
         }
     );
 
-    return uploadTask.then(async () => {
-        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-
-        return downloadUrl;
+    return uploadTask.then(() => {
+        return getDownloadURL(uploadTask.snapshot.ref);
     });
 };
 
